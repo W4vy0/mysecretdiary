@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>My Secret Diary</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Noto Sans KR", system-ui, sans-serif;
+      background: linear-gradient(
+        135deg,
+        #ffd6e8,
+        #ffe9f3,
+        #f3e8ff
+      );
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .cover {
+      background: rgba(255, 255, 255, 0.75);
+      backdrop-filter: blur(8px);
+      border-radius: 28px;
+      width: min(420px, 90%);
+      padding: 40px 32px 46px;
+      box-shadow: 0 20px 40px rgba(255, 105, 180, 0.25);
+      text-align: center;
+      position: relative;
+    }
+
+    .label {
+      display: inline-block;
+      padding: 6px 14px;
+      font-size: 13px;
+      border-radius: 999px;
+      background: #ff9acb;
+      color: white;
+      letter-spacing: 0.05em;
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 38px;
+      font-weight: 800;
+      color: #ff5fa2;
+      letter-spacing: -1px;
+    }
+
+    .subtitle {
+      margin-top: 10px;
+      font-size: 16px;
+      color: #6b4b6b;
+    }
+
+    .heart {
+      width: 18px;
+      height: 18px;
+      background: #ff5fa2;
+      position: relative;
+      transform: rotate(45deg);
+      margin: 26px auto;
+    }
+
+    .heart::before,
+    .heart::after {
+      content: "";
+      width: 18px;
+      height: 18px;
+      background: #ff5fa2;
+      border-radius: 50%;
+      position: absolute;
+    }
+
+    .heart::before {
+      top: -9px;
+      left: 0;
+    }
+
+    .heart::after {
+      left: -9px;
+      top: 0;
+    }
+
+    .note {
+      font-size: 14px;
+      line-height: 1.8;
+      color: #4b3b4b;
+      background: rgba(255, 255, 255, 0.6);
+      border-radius: 16px;
+      padding: 18px 16px;
+      margin-top: 24px;
+    }
+
+    .note span {
+      font-family: monospace;
+      font-size: 13px;
+      opacity: 0.7;
+    }
+
+    .corner {
+      position: absolute;
+      bottom: 16px;
+      right: 20px;
+      font-size: 12px;
+      color: rgba(0, 0, 0, 0.4);
+      font-family: monospace;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="cover">
+    <div class="label">PRIVATE</div>
+
+    <h1>My Secret Diary</h1>
+    <div class="subtitle">무명도에서의 기록</div>
+
+    <div class="heart"></div>
+
+    <div class="note">
+      <p>아무에게도 보여주지 않을 거야.</p>
+      <p>너는 몰라도 돼.</p>
+      <p>나는 항상 보고 있었으니까.</p>
+      <span>※ authorized reader only</span>
+    </div>
+
+    <div class="corner">ISLAND / confidential</div>
+  </div>
+</body>
+</html>
