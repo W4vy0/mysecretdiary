@@ -1,135 +1,181 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <title>My Secret Diary</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>My Secret Diary</title>
 
-  <style>
-    body {
-      margin: 0;
-      min-height: 100vh;
-      font-family: "Noto Sans KR", system-ui, sans-serif;
-      background: linear-gradient(
-        135deg,
-        #ffd6e8,
-        #ffe9f3,
-        #f3e8ff
-      );
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
+<style>
+/* ===== 기본 리셋 ===== */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: #f6c1d9;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Comic Sans MS', 'Patrick Hand', cursive;
+  overflow: hidden;
+}
 
-    .cover {
-      background: rgba(255, 255, 255, 0.75);
-      backdrop-filter: blur(8px);
-      border-radius: 28px;
-      width: min(420px, 90%);
-      padding: 40px 32px 46px;
-      box-shadow: 0 20px 40px rgba(255, 105, 180, 0.25);
-      text-align: center;
-      position: relative;
-    }
+/* ===== 모바일 비율 컨테이너 ===== */
+#app {
+  width: 100%;
+  max-width: 390px;
+  aspect-ratio: 9 / 16;
+  background: #ffd6e8;
+  border-radius: 22px;
+  position: relative;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+  overflow: hidden;
+}
 
-    .label {
-      display: inline-block;
-      padding: 6px 14px;
-      font-size: 13px;
-      border-radius: 999px;
-      background: #ff9acb;
-      color: white;
-      letter-spacing: 0.05em;
-      margin-bottom: 20px;
-    }
+/* ===== 공책 ===== */
+#diary {
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(
+      to bottom,
+      #ffeaf3,
+      #ffeaf3 28px,
+      #f7b6cf 29px
+    );
+  padding: 40px 24px;
+}
 
-    h1 {
-      margin: 0;
-      font-size: 38px;
-      font-weight: 800;
-      color: #ff5fa2;
-      letter-spacing: -1px;
-    }
+/* ===== 타이틀 ===== */
+#title {
+  text-align: center;
+  margin-top: 40px;
+  font-size: 36px;
+  letter-spacing: 2px;
+}
 
-    .subtitle {
-      margin-top: 10px;
-      font-size: 16px;
-      color: #6b4b6b;
-    }
+#title span {
+  display: inline-block;
+  background: #fff;
+  padding: 4px 10px;
+  margin: 2px;
+  transform: rotate(-2deg);
+}
 
-    .heart {
-      width: 18px;
-      height: 18px;
-      background: #ff5fa2;
-      position: relative;
-      transform: rotate(45deg);
-      margin: 26px auto;
-    }
+/* ===== 자물쇠 ===== */
+#lock {
+  position: absolute;
+  top: 55%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 56px;
+  z-index: 3;
+}
 
-    .heart::before,
-    .heart::after {
-      content: "";
-      width: 18px;
-      height: 18px;
-      background: #ff5fa2;
-      border-radius: 50%;
-      position: absolute;
-    }
+/* ===== 열쇠 ===== */
+#key {
+  position: absolute;
+  bottom: 12%;
+  right: 12%;
+  font-size: 44px;
+  cursor: grab;
+  z-index: 4;
+  touch-action: none;
+}
 
-    .heart::before {
-      top: -9px;
-      left: 0;
-    }
+/* ===== 열림 애니메이션 ===== */
+.unlocked #lock {
+  content: "🔓";
+}
 
-    .heart::after {
-      left: -9px;
-      top: 0;
-    }
+.unlocked #diary {
+  animation: openDiary 0.8s ease forwards;
+}
 
-    .note {
-      font-size: 14px;
-      line-height: 1.8;
-      color: #4b3b4b;
-      background: rgba(255, 255, 255, 0.6);
-      border-radius: 16px;
-      padding: 18px 16px;
-      margin-top: 24px;
-    }
+@keyframes openDiary {
+  to {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+}
 
-    .note span {
-      font-family: monospace;
-      font-size: 13px;
-      opacity: 0.7;
-    }
+/* ===== 내부 페이지 ===== */
+#inside {
+  position: absolute;
+  inset: 0;
+  background: #fff0f7;
+  display: none;
+  padding: 32px;
+}
 
-    .corner {
-      position: absolute;
-      bottom: 16px;
-      right: 20px;
-      font-size: 12px;
-      color: rgba(0, 0, 0, 0.4);
-      font-family: monospace;
-    }
-  </style>
+.unlocked #inside {
+  display: block;
+}
+</style>
 </head>
 
 <body>
-  <div class="cover">
-    <div class="label">PRIVATE</div>
 
-    <h1>My Secret Diary</h1>
-    <div class="subtitle">내가 너를 사랑하고 있다는 증거의 기록</div>
-
-    <div class="heart"></div>
-
-    <div class="note">
-      <p>아무에게도 보여주지 않을 거야.</p>
-      <p>너는 몰라도 돼.</p>
-      <p>나는 항상 보고 있었으니까.</p>
-      <span>※ authorized reader only</span>
+<div id="app">
+  <div id="diary">
+    <div id="title">
+      <span>MY</span>
+      <span>Secret</span>
+      <span>Diary</span>
     </div>
 
-    <div class="corner">ISLAND / confidential</div>
+    <div id="lock">🔒</div>
+    <div id="key">🔑</div>
   </div>
+
+  <div id="inside">
+    <!-- 여기부터 내부 페이지 (네가 자유 편집) -->
+  </div>
+</div>
+
+<!-- 🔊 자물쇠 소리 -->
+<audio id="unlockSound" src="https://cdn.pixabay.com/audio/2022/03/15/audio_9cbdc7c6a0.mp3"></audio>
+
+<script>
+const key = document.getElementById('key');
+const lock = document.getElementById('lock');
+const app = document.getElementById('app');
+const sound = document.getElementById('unlockSound');
+
+let dragging = false;
+
+key.addEventListener('pointerdown', () => {
+  dragging = true;
+  key.setPointerCapture(event.pointerId);
+});
+
+document.addEventListener('pointermove', (e) => {
+  if (!dragging) return;
+
+  key.style.left = e.clientX - 20 + 'px';
+  key.style.top = e.clientY - 20 + 'px';
+
+  const keyRect = key.getBoundingClientRect();
+  const lockRect = lock.getBoundingClientRect();
+
+  if (
+    keyRect.left < lockRect.right &&
+    keyRect.right > lockRect.left &&
+    keyRect.top < lockRect.bottom &&
+    keyRect.bottom > lockRect.top
+  ) {
+    unlock();
+  }
+});
+
+document.addEventListener('pointerup', () => {
+  dragging = false;
+});
+
+function unlock() {
+  if (app.classList.contains('unlocked')) return;
+  app.classList.add('unlocked');
+  sound.play();
+}
+</script>
+
 </body>
 </html>
