@@ -9,21 +9,21 @@
 <body>
 
 <!-- BGM 버튼 -->
-<button id="bgmBtn">🔊</button>
-<audio id="bgm" loop>
+<button id="bgmBtn" aria-label="BGM Toggle">🔊</button>
+<audio id="bgm" preload="auto" loop>
   <source src="bgm.mp3" type="audio/mpeg">
 </audio>
 
-<!-- 다이어리 -->
+<!-- 다이어리 영역 -->
 <div id="diary">
-  <img id="pageImage" src="1.png" />
+  <img id="pageImage" src="1.png" alt="page" />
 
-  <!-- 1페이지 전용 -->
-  <img id="lock" src="lock.png" />
-  <img id="key" src="key.png" />
+  <!-- 1페이지: 드래그 열쇠 + 자물쇠 -->
+  <img id="lock" src="lock.png" alt="lock" />
+  <img id="key" src="key.png" alt="key" />
 
-  <!-- 페이지 넘김 버튼 -->
-  <div id="nextBtn"></div>
+  <!-- 2~5페이지: 하트 버튼(다음 페이지) -->
+  <button id="heartBtn" aria-label="Next page">💗</button>
 </div>
 
 <script src="script.js"></script>
