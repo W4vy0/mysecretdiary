@@ -10,39 +10,20 @@ const heartBtn = document.getElementById("heartBtn");
 const bgm = document.getElementById("bgm");
 const bgmBtn = document.getElementById("bgmBtn");
 
-// 오디오 (파일은 루트에 있어야 함)
-const pageSound = new Audio("page.mp3");   // 페이지 넘김
-const clickSound = new Audio("click.mp3"); // 딸깍(자물쇠에 갖다대면)
+// audio
+const pageSound = new Audio("page.mp3");  
+const clickSound = new Audio("click.mp3"); 
 pageSound.preload = "auto";
 clickSound.preload = "auto";
-
-// 볼륨(원하면 조절)
+bgmsound.preload = "auto";
+// voulem
 bgm.volume = 0.45;
-pageSound.volume = 0.5;
+pageSound.volume = 0.7;
 clickSound.volume = 0.9;
-
-// ---------------------------
-// BGM 토글 (브라우저 정책상 '클릭'으로만 재생 가능)
-// ---------------------------
-const bgm = document.getElementById("bgm");
-const bgmBtn = document.getElementById("bgmBtn");
-bgm.volume = 0.6;
-bgm.preload = "auto";
-
-// 파일이 실제로 로딩되는지 체크
-bgm.addEventListener("canplaythrough", () => {
-  console.log("✅ BGM loaded OK");
-});
-
-bgm.addEventListener("error", () => {
-  alert("❌ bgm.mp3를 찾거나 재생할 수 없어!\n- 파일이 같은 폴더(루트)에 있는지\n- 이름이 bgm.mp3가 맞는지(대소문자 포함)\n- 업로드 후 Commit 했는지 확인해줘.");
-});
-
+// BGM
 bgmBtn.addEventListener("click", async () => {
   try {
     if (bgm.paused) {
-      // iOS/모바일에서 안정적으로 하려고 currentTime 건드림
-      bgm.currentTime = bgm.currentTime || 0;
       await bgm.play();
       bgmBtn.textContent = "🔇";
     } else {
@@ -50,11 +31,12 @@ bgmBtn.addEventListener("click", async () => {
       bgmBtn.textContent = "🔊";
     }
   } catch (e) {
-    alert("❌ 브금 재생이 막혔어.\n1) 버튼을 다시 눌러보기\n2) 파일이 bgm.mp3 맞는지\n3) 콘솔(F12) 에러 확인\n\n에러: " + e);
+    alert("브금 끄기!");
   }
 });
+
 // ---------------------------
-// 페이지 UI 업데이트
+// page UI update
 // ---------------------------
 function updateUI() {
   pageImage.src = `${page}.png`;
