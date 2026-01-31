@@ -1,0 +1,70 @@
+let page = 1;
+let unlocked = false;
+
+const pageImage = document.getElementById("pageImage");
+const lock = document.getElementById("lock");
+const key = document.getElementById("key");
+const nextBtn = document.getElementById("nextBtn");
+
+const bgm = document.getElementById("bgm");
+const bgmBtn = document.getElementById("bgmBtn");
+
+// 🔊 사운드
+const unlockSound = new Audio("https://cdn.pixabay.com/audio/2022/03/15/audio_9f9d7b9a7b.mp3"); // 딸깍
+const pageSound = new Audio("page.mp3"); // 종이 넘김
+
+pageSound.volume = 0.6;
+
+// 🔑 열쇠 → 자물쇠
+key.onclick = () => {
+  if (!unlocked) {
+    unlocked = true;
+    unlockSound.play();
+    lock.style.display = "none";
+    key.style.display = "none";
+    nextBtn.style.display = "block"; // 2페이지 진입 가능
+  }
+};
+
+// ▶ 페이지 넘기기 (2,3,4,5만)
+nextBtn.onclick = () => {
+  if (page === 1 && !unlocked) return;
+
+  if (page >= 1 && page < 6) {
+    page++;
+    pageSound.currentTime = 0;
+    pageSound.play();
+    pageImage.src = `${page}.png`;
+  }
+
+  // 1페이지 전용 요소
+  if (page === 1) {
+    lock.style.display = "block";
+    key.style.display = "block";
+    nextBtn.style.display = "none";
+  } 
+  // 2~5페이지 → 넘김 가능
+  else if (page >= 2 && page <= 5) {
+    lock.style.display = "none";
+    key.style.display = "none";
+    nextBtn.style.display = "block";
+  } 
+  // 6페이지 → 넘김 종료
+  else {
+    nextBtn.style.display = "none";
+  }
+};
+
+// 🔊 BGM 토글
+bgmBtn.onclick = () => {
+  if (bgm.paused) {
+    bgm.play();
+    bgmBtn.textContent = "🔇";
+  } else {
+    bgm.pause();
+    bgmBtn.textContent = "🔊";
+  }
+};
+
+// 초기 상태
+nextBtn.style.display = "none";
